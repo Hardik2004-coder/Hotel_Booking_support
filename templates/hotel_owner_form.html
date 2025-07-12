@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Owner Registration - Trippy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="{{ url_for('static', filename='style_hotel_form.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="background-elements">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <div class="brand-logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 3L26 9V29H6V9L16 3Z" fill="url(#gradient1)"/>
+                        <path d="M10 13H22V17H10V13Z" fill="white" opacity="0.9"/>
+                        <path d="M10 19H22V23H10V19Z" fill="white" opacity="0.7"/>
+                        <defs>
+                            <linearGradient id="gradient1" x1="6" y1="3" x2="26" y2="29" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#3B82F6"/>
+                                <stop offset="1" stop-color="#1E40AF"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span>Trippy</span>
+                </div>
+            </a>
+            {% if session.user or session.owner %}
+                <a href="/logout" class="btn btn-outline-danger">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2">
+                        <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16 17L21 12L16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Logout
+                </a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+                <!-- Header Section -->
+                <div class="form-header text-center">
+                    <div class="header-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 21H21V9L12 2L3 9V21Z" fill="url(#headerGradient)"/>
+                            <path d="M9 12H15V16H9V12Z" fill="white"/>
+                            <defs>
+                                <linearGradient id="headerGradient" x1="3" y1="2" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#3B82F6"/>
+                                    <stop offset="1" stop-color="#1E40AF"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h1 class="form-title">Join Trippy as a Hotel Partner</h1>
+                    <p class="form-subtitle">Register your property and start welcoming guests from around the world</p>
+                </div>
+
+                <!-- Progress Indicator -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Owner Details</div>
+                        </div>
+                        <div class="progress-step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Hotel Information</div>
+                        </div>
+                        <div class="progress-step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Review & Submit</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Registration Form -->
+                <div class="registration-form">
+                    <form method="POST" id="hotelOwnerForm">
+                        <!-- Step 1: Owner Details -->
+                        <div class="form-step active" id="step1">
+                            <div class="step-card">
+                                <div class="step-header">
+                                    <h3>Owner Information</h3>
+                                    <p>Tell us about yourself as the property owner</p>
+                                </div>
+                                
+                                <div class="row g-4">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="currentColor"/>
+                                                    <path d="M12 14C7.58172 14 4 17.5817 4 22H20C20 17.5817 16.4183 14 12 14Z" fill="currentColor"/>
+                                                </svg>
+                                                Full Name
+                                            </label>
+                                            <input type="text" name="owner_name" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
+                                                </svg>
+                                                Email Address
+                                            </label>
+                                            <input type="email" name="email" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.69 14.9 16.08 14.82 16.43 14.93C17.55 15.3 18.75 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z" fill="currentColor"/>
+                                                </svg>
+                                                Contact Number
+                                            </label>
+                                            <input type="text" name="contact" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M18 8H20C21.1 8 22 8.9 22 10V20C22 21.1 21.1 22 20 22H4C2.9 22 2 21.1 2 20V10C2 8.9 2.9 8 4 8H6V6C6 3.79 7.79 2 10 2H14C16.21 2 18 3.79 18 6V8ZM12 17C13.1 17 14 16.1 14 15C14 13.9 13.1 13 12 13C10.9 13 10 13.9 10 15C10 16.1 10.9 17 12 17ZM16 8V6C16 4.9 15.1 4 14 4H10C8.9 4 8 4.9 8 6V8H16Z" fill="currentColor"/>
+                                                </svg>
+                                                Password
+                                            </label>
+                                            <input type="password" name="password" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                                Confirm Password
+                                            </label>
+                                            <input type="password" name="confirm_password" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9S10.62 6.5 12 6.5S14.5 7.62 14.5 9S13.38 11.5 12 11.5Z" fill="currentColor"/>
+                                                </svg>
+                                                Residential Address
+                                            </label>
+                                            <input type="text" name="address" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Hotel Details -->
+                        <div class="form-step" id="step2">
+                            <div class="step-card">
+                                <div class="step-header">
+                                    <h3>Hotel Information</h3>
+                                    <p>Provide details about your property</p>
+                                </div>
+                                
+                                <div class="row g-4">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M3 21H21V9L12 2L3 9V21Z" fill="currentColor"/>
+                                                    <path d="M9 12H15V16H9V12Z" fill="white"/>
+                                                </svg>
+                                                Hotel Name
+                                            </label>
+                                            <input type="text" name="hotel_name" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19ZM7 10H17V12H7V10ZM7 14H17V16H7V14Z" fill="currentColor"/>
+                                                </svg>
+                                                Number of Rooms
+                                            </label>
+                                            <input type="number" name="num_rooms" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9S10.62 6.5 12 6.5S14.5 7.62 14.5 9S13.38 11.5 12 11.5Z" fill="currentColor"/>
+                                                </svg>
+                                                Location
+                                            </label>
+                                            <input type="text" name="location" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19ZM7 10H17V12H7V10ZM7 14H17V16H7V14Z" fill="currentColor"/>
+                                                </svg>
+                                                Full Address of Hotel
+                                            </label>
+                                            <input type="text" name="full_address" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12">
+                                        <div class="amenities-section">
+                                            <h4 class="amenities-title">Hotel Amenities</h4>
+                                            <p class="amenities-subtitle">Select the amenities your hotel offers</p>
+                                            
+                                            <div class="amenities-grid">
+                                                <div class="amenity-card">
+                                                    <input type="checkbox" name="wifi" id="wifi" class="amenity-checkbox">
+                                                    <label for="wifi" class="amenity-label">
+                                                        <div class="amenity-icon">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M1 9L5 13L9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                <path d="M20 3H4C2.9 3 2 3.9 2 5V19C2 20.1 2.9 21 4 21H20C21.1 21 22 20.1 22 19V5C22 3.9 21.1 3 20 3Z" stroke="currentColor" stroke-width="2"/>
+                                                                <path d="M8 21L16 3" stroke="currentColor" stroke-width="2"/>
+                                                            </svg>
+                                                        </div>
+                                                        <div class="amenity-content">
+                                                            <h5>WiFi</h5>
+                                                            <p>High-speed internet access</p>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                                
+                                                <div class="amenity-card">
+                                                    <input type="checkbox" name="parking" id="parking" class="amenity-checkbox">
+                                                    <label for="parking" class="amenity-label">
+                                                        <div class="amenity-icon">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M19 7H5C3.9 7 3 7.9 3 9V15C3 16.1 3.9 17 5 17H19C20.1 17 21 16.1 21 15V9C21 7.9 20.1 7 19 7Z" stroke="currentColor" stroke-width="2"/>
+                                                                <path d="M3 12H21" stroke="currentColor" stroke-width="2"/>
+                                                                <path d="M8 7V17" stroke="currentColor" stroke-width="2"/>
+                                                                <path d="M16 7V17" stroke="currentColor" stroke-width="2"/>
+                                                            </svg>
+                                                        </div>
+                                                        <div class="amenity-content">
+                                                            <h5>Parking</h5>
+                                                            <p>Secure parking facilities</p>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Review -->
+                        <div class="form-step" id="step3">
+                            <div class="step-card">
+                                <div class="step-header">
+                                    <h3>Review Your Information</h3>
+                                    <p>Please review all details before submitting your registration</p>
+                                </div>
+                                
+                                <div class="review-section">
+                                    <div class="review-card">
+                                        <h4>Owner Details</h4>
+                                        <div class="review-grid">
+                                            <div class="review-item">
+                                                <span class="review-label">Full Name:</span>
+                                                <span class="review-value" id="review-owner-name">-</span>
+                                            </div>
+                                            <div class="review-item">
+                                                <span class="review-label">Email:</span>
+                                                <span class="review-value" id="review-email">-</span>
+                                            </div>
+                                            <div class="review-item">
+                                                <span class="review-label">Contact:</span>
+                                                <span class="review-value" id="review-contact">-</span>
+                                            </div>
+                                            <div class="review-item">
+                                                <span class="review-label">Address:</span>
+                                                <span class="review-value" id="review-address">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="review-card">
+                                        <h4>Hotel Information</h4>
+                                        <div class="review-grid">
+                                            <div class="review-item">
+                                                <span class="review-label">Hotel Name:</span>
+                                                <span class="review-value" id="review-hotel-name">-</span>
+                                            </div>
+                                            <div class="review-item">
+                                                <span class="review-label">Number of Rooms:</span>
+                                                <span class="review-value" id="review-num-rooms">-</span>
+                                            </div>
+                                            <div class="review-item">
+                                                <span class="review-label">Location:</span>
+                                                <span class="review-value" id="review-location">-</span>
+                                            </div>
+                                            <div class="review-item">
+                                                <span class="review-label">Full Address:</span>
+                                                <span class="review-value" id="review-full-address">-</span>
+                                            </div>
+                                            <div class="review-item">
+                                                <span class="review-label">Amenities:</span>
+                                                <span class="review-value" id="review-amenities">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevBtn" onclick="changeStep(-1)" style="display: none;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2">
+                                    <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Previous
+                            </button>
+                            
+                            <button type="button" class="btn btn-primary" id="nextBtn" onclick="changeStep(1)">
+                                Next
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-2">
+                                    <path d="M5 12H19M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            
+                            <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2">
+                                    <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Submit Registration
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.progress-step').forEach(s => s.classList.remove('active'));
+            
+            // Show current step
+            document.getElementById(`step${step}`).classList.add('active');
+            document.querySelector(`[data-step="${step}"]`).classList.add('active');
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').style.display = step === 1 ? 'none' : 'inline-flex';
+            document.getElementById('nextBtn').style.display = step === totalSteps ? 'none' : 'inline-flex';
+            document.getElementById('submitBtn').style.display = step === totalSteps ? 'inline-flex' : 'none';
+            
+            // Update review section if on step 3
+            if (step === 3) {
+                updateReview();
+            }
+        }
+
+        function changeStep(direction) {
+            const newStep = currentStep + direction;
+            
+            if (newStep >= 1 && newStep <= totalSteps) {
+                // Validate current step before moving forward
+                if (direction > 0 && !validateStep(currentStep)) {
+                    return;
+                }
+                
+                currentStep = newStep;
+                showStep(currentStep);
+            }
+        }
+
+        function validateStep(step) {
+            const stepElement = document.getElementById(`step${step}`);
+            const requiredInputs = stepElement.querySelectorAll('input[required]');
+            
+            for (let input of requiredInputs) {
+                if (!input.value.trim()) {
+                    input.focus();
+                    input.classList.add('is-invalid');
+                    return false;
+                }
+                input.classList.remove('is-invalid');
+            }
+            
+            // Additional validation for password confirmation
+            if (step === 1) {
+                const password = document.querySelector('input[name="password"]').value;
+                const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
+                
+                if (password !== confirmPassword) {
+                    document.querySelector('input[name="confirm_password"]').classList.add('is-invalid');
+                    alert('Passwords do not match!');
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        function updateReview() {
+            // Owner details
+            document.getElementById('review-owner-name').textContent = document.querySelector('input[name="owner_name"]').value || '-';
+            document.getElementById('review-email').textContent = document.querySelector('input[name="email"]').value || '-';
+            document.getElementById('review-contact').textContent = document.querySelector('input[name="contact"]').value || '-';
+            document.getElementById('review-address').textContent = document.querySelector('input[name="address"]').value || '-';
+            
+            // Hotel details
+            document.getElementById('review-hotel-name').textContent = document.querySelector('input[name="hotel_name"]').value || '-';
+            document.getElementById('review-num-rooms').textContent = document.querySelector('input[name="num_rooms"]').value || '-';
+            document.getElementById('review-location').textContent = document.querySelector('input[name="location"]').value || '-';
+            document.getElementById('review-full-address').textContent = document.querySelector('input[name="full_address"]').value || '-';
+            
+            // Amenities
+            const amenities = [];
+            if (document.querySelector('input[name="wifi"]').checked) amenities.push('WiFi');
+            if (document.querySelector('input[name="parking"]').checked) amenities.push('Parking');
+            document.getElementById('review-amenities').textContent = amenities.length > 0 ? amenities.join(', ') : 'None selected';
+        }
+
+        // Form submission validation
+        document.getElementById('hotelOwnerForm').addEventListener('submit', function(e) {
+            if (!validateStep(1) || !validateStep(2)) {
+                e.preventDefault();
+                alert('Please fill in all required fields correctly.');
+                return false;
+            }
+        });
+
+        // Initialize form
+        showStep(1);
+
+        // Add floating animation to background shapes
+        document.addEventListener('DOMContentLoaded', function() {
+            const shapes = document.querySelectorAll('.floating-shape');
+            shapes.forEach((shape, index) => {
+                shape.style.animationDelay = `${index * 0.5}s`;
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

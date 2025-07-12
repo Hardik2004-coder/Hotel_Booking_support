@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trippy - Customer Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_customer_dashboard.css') }}">
+
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo">
+                    <div class="logo-icon">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="20" cy="20" r="20" fill="url(#gradient1)"/>
+                            <path d="M12 20L20 12L28 20L20 28L12 20Z" fill="white"/>
+                            <path d="M16 20L20 16L24 20L20 24L16 20Z" fill="url(#gradient2)"/>
+                            <defs>
+                                <linearGradient id="gradient1" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#667eea"/>
+                                    <stop offset="1" stop-color="#764ba2"/>
+                                </linearGradient>
+                                <linearGradient id="gradient2" x1="16" y1="16" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#f093fb"/>
+                                    <stop offset="1" stop-color="#f5576c"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="brand-text">
+                        <h3 class="brand-name">Trippy</h3>
+                        <p class="brand-tagline">Your Travel Companion</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-menu">
+                <div class="menu-section">
+                    <h6 class="menu-title">MAIN MENU</h6>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active" data-section="home">
+                                <div class="nav-icon">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <span class="nav-text">Dashboard</span>
+                                <div class="nav-indicator"></div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-section="hotels">
+                                <div class="nav-icon">
+                                    <i class="fas fa-hotel"></i>
+                                </div>
+                                <span class="nav-text">Hotels</span>
+                                <div class="nav-indicator"></div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-section="flights">
+                                <div class="nav-icon">
+                                    <i class="fas fa-plane"></i>
+                                </div>
+                                <span class="nav-text">Airlines</span>
+                                <div class="nav-indicator"></div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="/logout" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle d-lg-none" id="mobileMenuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                    <p class="page-subtitle" id="pageSubtitle">Welcome to your travel management center</p>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-details">
+                            <span class="user-name">{{ session['user'] }}</span>
+                            <span class="user-role">Traveler</span>
+                        </div>
+                    </div>
+                    <div class="current-time" id="currentTime"></div>
+                </div>
+            </header>
+
+            <!-- Content Sections -->
+            <div class="content-body">
+                <!-- Home Section -->
+                <section id="home" class="content-section active">
+                    <div class="welcome-section">
+                        <div class="welcome-card">
+                            <div class="welcome-content">
+                                <div class="welcome-icon">
+                                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="40" cy="40" r="40" fill="url(#welcomeGradient)"/>
+                                        <path d="M25 40L40 25L55 40L40 55L25 40Z" fill="white" opacity="0.9"/>
+                                        <path d="M32 40L40 32L48 40L40 48L32 40Z" fill="white"/>
+                                        <defs>
+                                            <linearGradient id="welcomeGradient" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                                                <stop stop-color="#667eea"/>
+                                                <stop offset="1" stop-color="#764ba2"/>
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                <div class="welcome-text">
+                                    <h2>Welcome back, {{ session['user'] }}!</h2>
+                                    <p>Ready to explore the world? Discover amazing hotels and book flights with our trusted partners.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-section">
+                        <div class="row g-4">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="stat-card">
+                                    <div class="stat-icon hotels">
+                                        <i class="fas fa-hotel"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h3 class="stat-number">{{ hotels|length if hotels else 0 }}</h3>
+                                        <p class="stat-label">Available Hotels</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="stat-card">
+                                    <div class="stat-icon flights">
+                                        <i class="fas fa-plane"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h3 class="stat-number">8</h3>
+                                        <p class="stat-label">Partner Airlines</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="stat-card">
+                                    <div class="stat-icon destinations">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h3 class="stat-number">150+</h3>
+                                        <p class="stat-label">Destinations</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="stat-card">
+                                    <div class="stat-icon bookings">
+                                        <i class="fas fa-calendar-check"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h3 class="stat-number">24/7</h3>
+                                        <p class="stat-label">Support Available</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions-section">
+                        <h3 class="section-title">Quick Actions</h3>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="action-card" data-section="hotels">
+                                    <div class="action-icon">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                    <div class="action-content">
+                                        <h4>Browse Hotels</h4>
+                                        <p>Discover amazing accommodations</p>
+                                    </div>
+                                    <div class="action-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="action-card" data-section="flights">
+                                    <div class="action-icon">
+                                        <i class="fas fa-plane-departure"></i>
+                                    </div>
+                                    <div class="action-content">
+                                        <h4>View Airlines</h4>
+                                        <p>Explore flight options</p>
+                                    </div>
+                                    <div class="action-arrow">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Hotels Section -->
+                <section id="hotels" class="content-section">
+                    <div class="section-header">
+                        <div class="section-title-wrapper">
+                            <div class="section-icon">
+                                <i class="fas fa-hotel"></i>
+                            </div>
+                            <div>
+                                <h2 class="section-title">Available Hotels</h2>
+                                <p class="section-description">Discover our partner hotels with excellent amenities</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <div class="table-container">
+                            <div class="table-responsive">
+                                <table class="table hotels-table">
+                                    <thead>
+                                        <tr>
+                                            <th><i class="fas fa-building me-2"></i>Hotel Name</th>
+                                            <th><i class="fas fa-bed me-2"></i>Rooms</th>
+                                            <th><i class="fas fa-map-marker-alt me-2"></i>Location</th>
+                                            <th><i class="fas fa-address-card me-2"></i>Address</th>
+                                            <th><i class="fas fa-wifi me-2"></i>WiFi</th>
+                                            <th><i class="fas fa-car me-2"></i>Parking</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for hotel in hotels %}
+                                        <tr class="hotel-row">
+                                            <td class="hotel-name">
+                                                <div class="hotel-info">
+                                                    <div class="hotel-icon">
+                                                        <i class="fas fa-building"></i>
+                                                    </div>
+                                                    <span>{{ hotel[0] }}</span>
+                                                </div>
+                                            </td>
+                                            <td class="room-count">{{ hotel[1] }}</td>
+                                            <td class="location">{{ hotel[2] }}</td>
+                                            <td class="address">{{ hotel[3] }}</td>
+                                            <td>
+                                                <span class="amenity-badge {{ 'available' if hotel[4] else 'unavailable' }}">
+                                                    <i class="fas {{ 'fa-check' if hotel[4] else 'fa-times' }}"></i>
+                                                    {{ 'WiFi' if hotel[4] else 'WiFi' }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="amenity-badge {{ 'available' if hotel[5] else 'unavailable' }}">
+                                                    <i class="fas {{ 'fa-check' if hotel[5] else 'fa-times' }}"></i>
+                                                    {{ 'Parking' if hotel[5] else 'Parking' }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Flights Section -->
+                <section id="flights" class="content-section">
+                    <div class="section-header">
+                        <div class="section-title-wrapper">
+                            <div class="section-icon">
+                                <i class="fas fa-plane"></i>
+                            </div>
+                            <div>
+                                <h2 class="section-title">Partner Airlines</h2>
+                                <p class="section-description">Explore flights with our trusted airline partners</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="airlines-grid">
+                        <div class="row g-4">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="airline-card">
+                                    <div class="airline-logo emirates">
+                                        <i class="fas fa-plane-departure"></i>
+                                    </div>
+                                    <div class="airline-info">
+                                        <h4 class="airline-name">Emirates</h4>
+                                        <p class="airline-description">Premium international flights with world-class service</p>
+                                    </div>
+                                    <a href="https://www.emirates.com" target="_blank" class="visit-btn">
+                                        <span>Visit Website</span>
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="airline-card">
+                                    <div class="airline-logo qatar">
+                                        <i class="fas fa-plane-departure"></i>
+                                    </div>
+                                    <div class="airline-info">
+                                        <h4 class="airline-name">Qatar Airways</h4>
+                                        <p class="airline-description">Award-winning airline with exceptional comfort</p>
+                                    </div>
+                                    <a href="https://www.qatarairways.com" target="_blank" class="visit-btn">
+                                        <span>Visit Website</span>
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="airline-card">
+                                    <div class="airline-logo singapore">
+                                        <i class="fas fa-plane-departure"></i>
+                                    </div>
+                                    <div class="airline-info">
+                                        <h4 class="airline-name">Singapore Airlines</h4>
+                                        <p class="airline-description">Excellence in aviation and customer service</p>
+                                    </div>
+                                    <a href="https://www.singaporeair.com" target="_blank" class="visit-btn">
+                                        <span>Visit Website</span>
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="airline-card">
+                                    <div class="airline-logo lufthansa">
+                                        <i class="fas fa-plane-departure"></i>
+                                    </div>
+                                    <div class="airline-info">
+                                        <h4 class="airline-name">Lufthansa</h4>
+                                        <p class="airline-description">European excellence in air travel</p>
+                                    </div>
+                                    <a href="https://www.lufthansa.com" target="_blank" class="visit-btn">
+                                        <span>Visit Website</span>
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="airline-card">
+                                    <div class="airline-logo british">
+                                        <i class="fas fa-plane-departure"></i>
+                                    </div>
+                                    <div class="airline-info">
+                                        <h4 class="airline-name">British Airways</h4>
+                                        <p class="airline-description">To fly, to serve with British elegance</p>
+                                    </div>
+                                    <a href="https://www.britishairways.com" target="_blank" class="visit-btn">
+                                        <span>Visit Website</span>
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="airline-card">
+                                    <div class="airline-logo airindia">
+                                        <i class="fas fa-plane-departure"></i>
+                                    </div>
+                                    <div class="airline-info">
+                                        <h4 class="airline-name">Air India</h4>
+                                        <p class="airline-description">Your palace in the sky with Indian hospitality</p>
+                                    </div>
+                                    <a href="https://www.airindia.in" target="_blank" class="visit-btn">
+                                        <span>Visit Website</span>
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="airline-card">
+                                    <div class="airline-logo indigo">
+                                        <i class="fas fa-plane-departure"></i>
+                                    </div>
+                                    <div class="airline-info">
+                                        <h4 class="airline-name">IndiGo</h4>
+                                        <p class="airline-description">On-time is a good time - reliable service</p>
+                                    </div>
+                                    <a href="https://www.goindigo.in" target="_blank" class="visit-btn">
+                                        <span>Visit Website</span>
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="airline-card">
+                                    <div class="airline-logo spicejet">
+                                        <i class="fas fa-plane-departure"></i>
+                                    </div>
+                                    <div class="airline-info">
+                                        <h4 class="airline-name">SpiceJet</h4>
+                                        <p class="airline-description">Red. Hot. Spicy - affordable air travel</p>
+                                    </div>
+                                    <a href="https://www.spicejet.com" target="_blank" class="visit-btn">
+                                        <span>Visit Website</span>
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+<!-- Floating Chatbot Button -->
+<div class="chatbot-float">
+  <button class="chatbot-btn" title="Chat with us">
+    <i class="fas fa-comments"></i>
+    <div class="chatbot-pulse"></div>
+  </button>
+</div>
+
+<!-- Chatbot Popup -->
+<div id="chatbot-container" class="chatbot-container d-none">
+  <div class="chatbot-header">
+    <span>Trippy Chatbot Assistant</span>
+    <button class="chatbot-close">&times;</button>
+  </div>
+  <div class="chatbot-messages" id="chatbot-messages"></div>
+  <form id="chatbot-form" class="chatbot-form">
+    <input type="text" id="chatbot-input" placeholder="Type your message..." autocomplete="off" />
+    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+  </form>
+</div>
+
+<!-- Embedded CSS -->
+<style>
+.chatbot-container {
+  position: fixed;
+  bottom: 80px;
+  right: 30px;
+  width: 360px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+  max-height: 600px;
+}
+
+.chatbot-header {
+  background: #343a40;
+  color: #fff;
+  padding: 12px 15px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatbot-messages {
+  padding: 15px;
+  height: 400px;
+  overflow-y: auto;
+  font-size: 14px;
+  background-color: #f9f9f9;
+}
+
+.chatbot-form {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+.chatbot-form input {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+}
+
+.chatbot-form button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0 15px;
+}
+
+.chatbot-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.d-none {
+  display: none;
+}
+
+.chatbot-float {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 9998;
+}
+
+.chatbot-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.chatbot-pulse {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(0,123,255,0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.6; }
+  70% { transform: scale(1.2); opacity: 0; }
+  100% { transform: scale(0.95); opacity: 0; }
+}
+
+.chatbot-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  margin: 5px 5px 0 0;
+  transition: background 0.2s ease;
+}
+.chatbot-button:hover {
+  background-color: #0056b3;
+}
+</style>
+
+<!-- Embedded JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const chatbotBtn = document.querySelector('.chatbot-btn');
+  const chatbotContainer = document.getElementById('chatbot-container');
+  const chatbotClose = document.querySelector('.chatbot-close');
+  const chatbotForm = document.getElementById('chatbot-form');
+  const chatbotInput = document.getElementById('chatbot-input');
+  const chatbotMessages = document.getElementById('chatbot-messages');
+
+  chatbotBtn.addEventListener('click', () => {
+    chatbotContainer.classList.toggle('d-none');
+  });
+
+  chatbotClose.addEventListener('click', () => {
+    chatbotContainer.classList.add('d-none');
+  });
+
+  chatbotForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const msg = chatbotInput.value.trim();
+    if (msg === '') return;
+    appendMessage('You', msg);
+    chatbotInput.value = '';
+    sendMessage(msg);
+  });
+
+  function appendMessage(sender, text, buttons = []) {
+    const msg = document.createElement('div');
+    msg.innerHTML = `<strong>${sender}:</strong> ${text}`;
+    chatbotMessages.appendChild(msg);
+
+    if (buttons.length > 0) {
+      const buttonContainer = document.createElement('div');
+      buttons.forEach(button => {
+        const btn = document.createElement('button');
+        btn.textContent = button.title;
+        btn.className = 'chatbot-button';
+        btn.onclick = () => {
+          appendMessage('You', button.title);
+          sendMessage(button.payload);
+        };
+        buttonContainer.appendChild(btn);
+      });
+      chatbotMessages.appendChild(buttonContainer);
+    }
+
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  }
+
+  async function sendMessage(msg) {
+    try {
+      const res = await fetch('http://localhost:5005/webhooks/rest/webhook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sender: 'user', message: msg })
+      });
+      const data = await res.json();
+      if (data.length === 0) {
+        appendMessage('Bot', 'Sorry, I did not understand that.');
+      } else {
+        data.forEach(bot => appendMessage('Bot', bot.text || '', bot.buttons || []));
+      }
+    } catch (err) {
+      appendMessage('Bot', '⚠️ Unable to connect to the chatbot server.');
+    }
+  }
+});
+</script>
+
+<!-- Font Awesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>// Trippy Customer Dashboard JavaScript
+
+class TrippyDashboard {
+    constructor() {
+        this.currentSection = 'home';
+        this.isMobile = window.innerWidth < 1200;
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+        this.updateTime();
+        this.setInterval();
+        this.handleResize();
+        this.showSection('home');
+    }
+
+    setupEventListeners() {
+        // Navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = link.getAttribute('data-section');
+                this.showSection(section);
+                this.setActiveNavLink(link);
+                
+                // Close mobile menu if open
+                if (this.isMobile) {
+                    this.closeMobileMenu();
+                }
+            });
+        });
+
+        // Quick action cards
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const section = card.getAttribute('data-section');
+                this.showSection(section);
+                this.setActiveNavLink(document.querySelector(`[data-section="${section}"]`));
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileMenuToggle');
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', () => {
+                this.toggleMobileMenu();
+            });
+        }
+
+        // Window resize
+        window.addEventListener('resize', () => {
+            this.handleResize();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            this.handleKeyboardNavigation(e);
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (this.isMobile && !e.target.closest('.sidebar') && !e.target.closest('.mobile-menu-toggle')) {
+                this.closeMobileMenu();
+            }
+        });
+    }
+
+    showSection(sectionId) {
+        // Hide all sections
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.classList.remove('active');
+        });
+
+        // Show selected section
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add('active');
+            this.currentSection = sectionId;
+            this.updatePageTitle(sectionId);
+            this.animateSection(targetSection);
+        }
+    }
+
+    setActiveNavLink(activeLink) {
+        // Remove active class from all nav links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+        });
+
+        // Add active class to clicked nav link
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+    }
+
+    updatePageTitle(sectionId) {
+        const titleElement = document.getElementById('pageTitle');
+        const subtitleElement = document.getElementById('pageSubtitle');
+        
+        const titles = {
+            home: {
+                title: 'Dashboard',
+                subtitle: 'Welcome to your travel management center'
+            },
+            hotels: {
+                title: 'Hotels',
+                subtitle: 'Discover amazing accommodations worldwide'
+            },
+            flights: {
+                title: 'Airlines',
+                subtitle: 'Explore flights with trusted partners'
+            }
+        };
+
+        if (titles[sectionId]) {
+            titleElement.textContent = titles[sectionId].title;
+            subtitleElement.textContent = titles[sectionId].subtitle;
+        }
+    }
+
+    animateSection(section) {
+        // Add loading state
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        
+        // Animate in
+        requestAnimationFrame(() => {
+            section.style.transition = 'all 0.3s ease-out';
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
+        });
+
+        // Remove transition after animation
+        setTimeout(() => {
+            section.style.transition = '';
+        }, 300);
+    }
+
+    toggleMobileMenu() {
+        const sidebar = document.querySelector('.sidebar');
+        const isOpen = sidebar.classList.contains('show');
+        
+        if (isOpen) {
+            this.closeMobileMenu();
+        } else {
+            this.openMobileMenu();
+        }
+    }
+
+    openMobileMenu() {
+        const sidebar = document.querySelector('.sidebar');
+        const toggle = document.getElementById('mobileMenuToggle');
+        
+        sidebar.classList.add('show');
+        toggle.innerHTML = '<i class="fas fa-times"></i>';
+        document.body.style.overflow = 'hidden';
+    }
+
+    closeMobileMenu() {
+        const sidebar = document.querySelector('.sidebar');
+        const toggle = document.getElementById('mobileMenuToggle');
+        
+        sidebar.classList.remove('show');
+        toggle.innerHTML = '<i class="fas fa-bars"></i>';
+        document.body.style.overflow = '';
+    }
+
+    handleResize() {
+        const wasMobile = this.isMobile;
+        this.isMobile = window.innerWidth < 1200;
+        
+        // If switching from mobile to desktop, close mobile menu
+        if (wasMobile && !this.isMobile) {
+            this.closeMobileMenu();
+        }
+    }
+
+    updateTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+        const dateString = now.toLocaleDateString('en-US', {
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric'
+        });
+        
+        const timeElement = document.getElementById('currentTime');
+        if (timeElement) {
+            timeElement.textContent = `${dateString}, ${timeString}`;
+        }
+    }
+
+    setInterval() {
+        // Update time every second
+        setInterval(() => {
+            this.updateTime();
+        }, 1000);
+
+        // Add subtle animations to stat cards
+        setInterval(() => {
+            this.animateStatCards();
+        }, 5000);
+    }
+
+    animateStatCards() {
+        const statCards = document.querySelectorAll('.stat-card');
+        statCards.forEach((card, index) => {
+            setTimeout(() => {
+                card.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    card.style.transform = 'scale(1)';
+                }, 200);
+            }, index * 100);
+        });
+    }
+
+    handleKeyboardNavigation(e) {
+        // Handle keyboard shortcuts
+        if (e.altKey) {
+            switch (e.key) {
+                case '1':
+                    e.preventDefault();
+                    this.showSection('home');
+                    this.setActiveNavLink(document.querySelector('[data-section="home"]'));
+                    break;
+                case '2':
+                    e.preventDefault();
+                    this.showSection('hotels');
+                    this.setActiveNavLink(document.querySelector('[data-section="hotels"]'));
+                    break;
+                case '3':
+                    e.preventDefault();
+                    this.showSection('flights');
+                    this.setActiveNavLink(document.querySelector('[data-section="flights"]'));
+                    break;
+            }
+        }
+
+        // Handle escape key to close mobile menu
+        if (e.key === 'Escape' && this.isMobile) {
+            this.closeMobileMenu();
+        }
+    }
+
+    showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas fa-info-circle"></i>
+                <span>${message}</span>
+            </div>
+            <button class="notification-close">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+
+        // Add styles
+        notification.style.cssText = `
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: white;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--info);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: 400px;
+            animation: slideInRight 0.3s ease-out;
+        `;
+
+        // Add to DOM
+        document.body.appendChild(notification);
+
+        // Handle close button
+        const closeBtn = notification.querySelector('.notification-close');
+        closeBtn.addEventListener('click', () => {
+            this.removeNotification(notification);
+        });
+
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            this.removeNotification(notification);
+        }, 5000);
+    }
+
+    removeNotification(notification) {
+        notification.style.animation = 'slideOutRight 0.3s ease-out';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }
+
+    // Utility methods
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    throttle(func, limit) {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
+}
+
+// Initialize dashboard when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new TrippyDashboard();
+});
+
+// Add CSS animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideOutRight {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+
+    .notification-content {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex: 1;
+    }
+
+    .notification-close {
+        background: none;
+        border: none;
+        color: var(--gray-400);
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: var(--transition-fast);
+    }
+
+    .notification-close:hover {
+        color: var(--gray-600);
+        background: var(--gray-100);
+    }
+`;
+document.head.appendChild(style);</script>
+</body>
+</html>

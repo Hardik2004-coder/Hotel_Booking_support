@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trippy - Your Perfect Travel Companion</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <div class="brand-logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 3L26 9V29H6V9L16 3Z" fill="url(#gradient1)"/>
+                        <path d="M10 13H22V17H10V13Z" fill="white" opacity="0.9"/>
+                        <path d="M10 19H22V23H10V19Z" fill="white" opacity="0.7"/>
+                        <defs>
+                            <linearGradient id="gradient1" x1="6" y1="3" x2="26" y2="29" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#3B82F6"/>
+                                <stop offset="1" stop-color="#1E40AF"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span>Trippy</span>
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<br>
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <img src="static/image2.jpg" alt="Luxury Hotel" class="hero-bg-image">
+        </div>
+        
+        <div class="container">
+            <div class="row min-vh-100 align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            Discover Your Perfect
+                            <span class="text-gradient">Travel Experience</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            Book luxury hotels, discover amazing destinations, and create unforgettable memories with Trippy - your trusted travel companion.
+                        </p>
+                        
+                        <!-- User Status Card -->
+                        <div class="user-status-card">
+                            {% if session.user %}
+                                <div class="welcome-card customer-card">
+                                    <div class="welcome-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="currentColor"/>
+                                            <path d="M12 14C7.58172 14 4 17.5817 4 22H20C20 17.5817 16.4183 14 12 14Z" fill="currentColor"/>
+                                        </svg>
+                                    </div>
+                                    <div class="welcome-content">
+                                        <h3>Welcome back, {{ session.user }}!</h3>
+                                        <p>Customer Account</p>
+                                        <a href="/logout" class="btn btn-danger btn-sm">Sign Out</a>
+                                    </div>
+                                </div>
+                            {% elif session.owner %}
+                                <div class="welcome-card owner-card">
+                                    <div class="welcome-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M3 21H21V9L12 2L3 9V21Z" fill="currentColor"/>
+                                            <path d="M9 12H15V16H9V12Z" fill="white"/>
+                                        </svg>
+                                    </div>
+                                    <div class="welcome-content">
+                                        <h3>Welcome, {{ session.owner }}!</h3>
+                                        <p>Hotel Owner Dashboard</p>
+                                        <a href="/logout" class="btn btn-danger btn-sm">Sign Out</a>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="auth-card">
+                                    <div class="auth-header">
+                                        <h3>Get Started with Trippy</h3>
+                                        <p>Choose your account type to continue</p>
+                                    </div>
+                                    
+                                    <div class="account-type-selector">
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle account-type-btn" type="button" data-bs-toggle="dropdown" data-bs-display="static">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2">
+                                                    <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="currentColor"/>
+                                                    <path d="M12 14C7.58172 14 4 17.5817 4 22H20C20 17.5817 16.4183 14 12 14Z" fill="currentColor"/>
+                                                </svg>
+                                                Select Account Type
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#" onclick="showCustomer()">
+                                                        <div class="dropdown-item-content">
+                                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="currentColor"/>
+                                                                <path d="M12 14C7.58172 14 4 17.5817 4 22H20C20 17.5817 16.4183 14 12 14Z" fill="currentColor"/>
+                                                            </svg>
+                                                            <div>
+                                                                <strong>Customer / Guest</strong>
+                                                                <small>Book hotels and plan trips</small>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#" onclick="showOwner()">
+                                                        <div class="dropdown-item-content">
+                                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M3 21H21V9L12 2L3 9V21Z" fill="currentColor"/>
+                                                                <path d="M9 12H15V16H9V12Z" fill="white"/>
+                                                            </svg>
+                                                            <div>
+                                                                <strong>Hotel Owner</strong>
+                                                                <small>Manage your properties</small>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="auth-options" id="options"></div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-visual">
+                        <div class="floating-cards">
+                            <div class="floating-card card-1">
+                                <div class="card-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 21H21V9L12 2L3 9V21Z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <div class="card-content">
+                                    <h4>5-Star Hotels</h4>
+                                    <p>Luxury accommodations</p>
+                                </div>
+                            </div>
+                            <div class="floating-card card-2">
+                                <div class="card-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <div class="card-content">
+                                    <h4>Best Deals</h4>
+                                    <p>Exclusive offers</p>
+                                </div>
+                            </div>
+                            <div class="floating-card card-3">
+                                <div class="card-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <div class="card-content">
+                                    <h4>24/7 Support</h4>
+                                    <p>Always here to help</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Our Premium Services</h2>
+                <p class="section-subtitle">Everything you need for the perfect travel experience</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 21H21V9L12 2L3 9V21Z" fill="url(#serviceGradient1)"/>
+                                <path d="M9 12H15V16H9V12Z" fill="white"/>
+                                <defs>
+                                    <linearGradient id="serviceGradient1" x1="3" y1="2" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#3B82F6"/>
+                                        <stop offset="1" stop-color="#1E40AF"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h3>Luxury Hotels</h3>
+                        <p>Book from our curated selection of premium hotels worldwide with verified reviews and guaranteed best prices.</p>
+                        <div class="service-features">
+                            <span class="feature-tag">5-Star Properties</span>
+                            <span class="feature-tag">Best Price Guarantee</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="url(#serviceGradient2)"/>
+                                <path d="M2 17L12 22L22 17" stroke="url(#serviceGradient2)" stroke-width="2" fill="none"/>
+                                <path d="M2 12L12 17L22 12" stroke="url(#serviceGradient2)" stroke-width="2" fill="none"/>
+                                <defs>
+                                    <linearGradient id="serviceGradient2" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#10B981"/>
+                                        <stop offset="1" stop-color="#059669"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h3>Easy Booking</h3>
+                        <p>Seamless booking experience with instant confirmation, flexible cancellation, and secure payment processing.</p>
+                        <div class="service-features">
+                            <span class="feature-tag">Instant Confirmation</span>
+                            <span class="feature-tag">Secure Payments</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="url(#serviceGradient3)"/>
+                                <defs>
+                                    <linearGradient id="serviceGradient3" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#F59E0B"/>
+                                        <stop offset="1" stop-color="#D97706"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h3>24/7 Support</h3>
+                        <p>Round-the-clock customer support with multilingual assistance and dedicated travel consultants.</p>
+                        <div class="service-features">
+                            <span class="feature-tag">Live Chat</span>
+                            <span class="feature-tag">Phone Support</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="url(#serviceGradient4)"/>
+                                <defs>
+                                    <linearGradient id="serviceGradient4" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#EF4444"/>
+                                        <stop offset="1" stop-color="#DC2626"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h3>Exclusive Deals</h3>
+                        <p>Access member-only discounts, seasonal offers, and special packages for unforgettable experiences.</p>
+                        <div class="service-features">
+                            <span class="feature-tag">Member Discounts</span>
+                            <span class="feature-tag">Special Packages</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9S10.62 6.5 12 6.5S14.5 7.62 14.5 9S13.38 11.5 12 11.5Z" fill="url(#serviceGradient5)"/>
+                                <defs>
+                                    <linearGradient id="serviceGradient5" x1="5" y1="2" x2="19" y2="22" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#8B5CF6"/>
+                                        <stop offset="1" stop-color="#7C3AED"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h3>Global Destinations</h3>
+                        <p>Explore destinations across 150+ countries with local insights and personalized recommendations.</p>
+                        <div class="service-features">
+                            <span class="feature-tag">150+ Countries</span>
+                            <span class="feature-tag">Local Insights</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19ZM7 10H17V12H7V10ZM7 14H17V16H7V14Z" fill="url(#serviceGradient6)"/>
+                                <defs>
+                                    <linearGradient id="serviceGradient6" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#06B6D4"/>
+                                        <stop offset="1" stop-color="#0891B2"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h3>Property Management</h3>
+                        <p>Comprehensive tools for hotel owners to manage bookings, pricing, and guest communications efficiently.</p>
+                        <div class="service-features">
+                            <span class="feature-tag">Dashboard</span>
+                            <span class="feature-tag">Analytics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="about-image">
+                        <img src="https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Luxury Hotel Lobby" class="img-fluid rounded-4">
+                        <div class="about-stats">
+                            <div class="stat-card">
+                                <h3>50K+</h3>
+                                <p>Hotels</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>2M+</h3>
+                                <p>Customers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-content">
+                        <h2 class="section-title">Redefining Travel Excellence Since 2020</h2>
+                        <p class="lead">Trippy was born from a simple vision: to make luxury travel accessible and memorable for everyone while empowering hotel owners with cutting-edge technology.</p>
+                        
+                        <div class="about-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Verified Properties</h4>
+                                    <p>Every hotel is personally inspected and verified by our quality assurance team.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M13 10V3L4 14H11V21L20 10H13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Instant Booking</h4>
+                                    <p>Book your perfect stay in seconds with our lightning-fast reservation system.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Best Price Guarantee</h4>
+                                    <p>Find a lower price elsewhere? We'll match it and give you an additional 10% off.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Get in Touch</h2>
+                <p class="section-subtitle">Ready to plan your next adventure? We're here to help</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.69 14.9 16.08 14.82 16.43 14.93C17.55 15.3 18.75 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Call Us</h3>
+                        <p>Speak with our travel experts</p>
+                        <div class="contact-details">
+                            <strong>+1 (555) 123-4567</strong>
+                            <small>Available 24/7</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Email Us</h3>
+                        <p>Send us your questions</p>
+                        <div class="contact-details">
+                            <strong>support@trippy.com</strong>
+                            <small>Response within 2 hours</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9S10.62 6.5 12 6.5S14.5 7.62 14.5 9S13.38 11.5 12 11.5Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Visit Us</h3>
+                        <p>Come to our headquarters</p>
+                        <div class="contact-details">
+                            <strong>123 Travel Plaza</strong>
+                            <small>New York, NY 10001</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="footer-brand">
+                        <div class="brand-logo">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 3L26 9V29H6V9L16 3Z" fill="url(#footerGradient)"/>
+                                <path d="M10 13H22V17H10V13Z" fill="white" opacity="0.9"/>
+                                <path d="M10 19H22V23H10V19Z" fill="white" opacity="0.7"/>
+                                <defs>
+                                    <linearGradient id="footerGradient" x1="6" y1="3" x2="26" y2="29" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#3B82F6"/>
+                                        <stop offset="1" stop-color="#1E40AF"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <span>Trippy</span>
+                        </div>
+                        <p>Your perfect travel companion for unforgettable experiences worldwide.</p>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>Services</h5>
+                            <ul class="footer-links">
+                                <li><a href="#">Hotel Booking</a></li>
+                                <li><a href="#">Travel Planning</a></li>
+                                <li><a href="#">Customer Support</a></li>
+                                <li><a href="#">Property Management</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Company</h5>
+                            <ul class="footer-links">
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Careers</a></li>
+                                <li><a href="#">Press</a></li>
+                                <li><a href="#">Partners</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Support</h5>
+                            <ul class="footer-links">
+                                <li><a href="#">Help Center</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Terms of Service</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="copyright">&copy; 2024 Trippy. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 4.557C23.117 4.949 22.168 5.213 21.172 5.332C22.189 4.723 22.97 3.758 23.337 2.608C22.386 3.172 21.332 3.582 20.21 3.803C19.313 2.846 18.032 2.248 16.616 2.248C13.437 2.248 11.101 5.214 11.819 8.293C7.728 8.088 4.1 6.128 1.671 3.149C0.381 5.362 1.002 8.257 3.194 9.723C2.388 9.697 1.628 9.476 0.965 9.107C0.911 11.388 2.546 13.522 4.914 13.997C4.221 14.185 3.462 14.229 2.69 14.081C3.316 16.037 5.134 17.46 7.29 17.5C5.22 19.123 2.612 19.848 0 19.54C2.179 20.937 4.768 21.752 7.548 21.752C16.69 21.752 21.855 14.031 21.543 7.106C22.505 6.411 23.34 5.544 24 4.557Z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24V15.563H7.078V12.073H10.125V9.405C10.125 6.348 11.917 4.688 14.658 4.688C15.97 4.688 17.344 4.922 17.344 4.922V7.875H15.83C14.34 7.875 13.875 8.8 13.875 9.75V12.073H17.203L16.671 15.563H13.875V24C19.612 23.094 24 18.1 24 12.073Z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987C.029 17.396 3.615 21.983 8.5 23.439V15.197H6.091V11.987H8.5V9.348C8.5 6.985 10.017 5.595 12.186 5.595C13.22 5.595 14.309 5.789 14.309 5.789V8.128H13.108C11.93 8.128 11.548 8.87 11.548 9.633V11.987H14.196L13.759 15.197H11.548V23.439C16.433 21.983 20.018 17.396 20.018 11.987C20.018 5.367 14.639.001 12.017.001Z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showCustomer() {
+            document.getElementById('options').innerHTML = `
+                <div class="auth-buttons">
+                    <a href="/customer/signup" class="auth-btn signup-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z" fill="currentColor"/>
+                        </svg>
+                        Create Account
+                    </a>
+                    <a href="/customer/login" class="auth-btn login-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 7L9.6 8.4L12.2 11H2V13H12.2L9.6 15.6L11 17L16 12L11 7ZM20 19H12V21H20C21.1 21 22 20.1 22 19V5C22 3.9 21.1 3 20 3H12V5H20V19Z" fill="currentColor"/>
+                        </svg>
+                        Sign In
+                    </a>
+                </div>
+            `;
+        }
+
+        function showOwner() {
+            document.getElementById('options').innerHTML = `
+                <div class="auth-buttons">
+                    <a href="/owner/form" class="auth-btn signup-btn owner-signup">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 21H21V9L12 2L3 9V21Z" fill="currentColor"/>
+                            <path d="M9 12H15V16H9V12Z" fill="white"/>
+                        </svg>
+                        Register Your Property
+                    </a>
+                    <a href="/owner/login" class="auth-btn login-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 7L9.6 8.4L12.2 11H2V13H12.2L9.6 15.6L11 17L16 12L11 7ZM20 19H12V21H20C21.1 21 22 20.1 22 19V5C22 3.9 21.1 3 20 3H12V5H20V19Z" fill="currentColor"/>
+                        </svg>
+                        Owner Login
+                    </a>
+                </div>
+            `;
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Floating cards animation
+        const floatingCards = document.querySelectorAll('.floating-card');
+        floatingCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.2}s`;
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

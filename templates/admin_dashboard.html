@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Trippy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_admin_dashboard.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="admin-background">
+        <div class="background-overlay"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav class="navbar navbar-expand-lg navbar-light admin-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <div class="brand-logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 3L26 9V29H6V9L16 3Z" fill="url(#gradient1)"/>
+                        <path d="M10 13H22V17H10V13Z" fill="white" opacity="0.9"/>
+                        <path d="M10 19H22V23H10V19Z" fill="white" opacity="0.7"/>
+                        <defs>
+                            <linearGradient id="gradient1" x1="6" y1="3" x2="26" y2="29" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#3B82F6"/>
+                                <stop offset="1" stop-color="#1E40AF"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span>Trippy</span>
+
+                </div>
+            </a>
+                                <span class="admin-badge">Admin</span>
+            <!-- Navigation Menu -->
+            <div class="navbar-nav me-auto">
+                <ul class="nav nav-pills admin-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="showSection('home')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('hotels')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 21H21V9L12 2L3 9V21Z" fill="currentColor"/>
+                                <path d="M9 12H15V16H9V12Z" fill="white"/>
+                            </svg>
+                            Hotels
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('feedback')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Customer Feedback
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="navbar-nav ms-auto">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle admin-menu" href="#" role="button" data-bs-toggle="dropdown">
+                        <div class="admin-avatar">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="currentColor"/>
+                                <path d="M12 14C7.58172 14 4 17.5817 4 22H20C20 17.5817 16.4183 14 12 14Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <span>Administrator</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="refreshData()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.49 9C19.9828 7.56678 19.1209 6.28392 17.9845 5.27304C16.8482 4.26216 15.4745 3.55682 13.9917 3.21834C12.5089 2.87986 10.9652 2.91902 9.50481 3.33329C8.04437 3.74757 6.71475 4.52152 5.64 5.58L1 10M23 14L18.36 18.42C17.2853 19.4785 15.9556 20.2524 14.4952 20.6667C13.0348 21.081 11.4911 21.1201 10.0083 20.7817C8.52547 20.4432 7.1518 19.7378 6.01547 18.727C4.87913 17.7161 4.01717 16.4332 3.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Refresh Data
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="/logout">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 17L21 12L16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Logout
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <div class="container-fluid admin-container">
+        <!-- Home Section -->
+        <section id="home-section" class="admin-section active">
+            <div class="section-header">
+                <div class="header-content">
+                    <h1 class="section-title">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Dashboard Overview
+                    </h1>
+                    <p class="section-subtitle">Monitor recent activity and key metrics</p>
+                </div>
+                <form method="GET" action="/admin/dashboard" class="refresh-form">
+                    <button type="submit" class="btn btn-outline-primary refresh-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M20.49 9C19.9828 7.56678 19.1209 6.28392 17.9845 5.27304C16.8482 4.26216 15.4745 3.55682 13.9917 3.21834C12.5089 2.87986 10.9652 2.91902 9.50481 3.33329C8.04437 3.74757 6.71475 4.52152 5.64 5.58L1 10M23 14L18.36 18.42C17.2853 19.4785 15.9556 20.2524 14.4952 20.6667C13.0348 21.081 11.4911 21.1201 10.0083 20.7817C8.52547 20.4432 7.1518 19.7378 6.01547 18.727C4.87913 17.7161 4.01717 16.4332 3.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Refresh
+                    </button>
+                </form>
+            </div>
+
+            <div class="row g-4">
+                <!-- Recently Registered Hotels -->
+                <div class="col-lg-8">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 21H21V9L12 2L3 9V21Z" fill="currentColor"/>
+                                    <path d="M9 12H15V16H9V12Z" fill="white"/>
+                                </svg>
+                                Recently Registered Hotels
+                            </h3>
+                            <span class="item-count">{{ hotels[:5]|length }} Latest</span>
+                        </div>
+                        <div class="card-content">
+                            {% if hotels|length == 0 %}
+                                <div class="empty-state">
+                                    <div class="empty-icon">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M3 21H21V9L12 2L3 9V21Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </div>
+                                    <p>No hotels registered yet</p>
+                                </div>
+                            {% else %}
+                                <div class="hotels-list">
+                                    {% for h in hotels[:5]|reverse %}
+                                        <div class="hotel-item">
+                                            <div class="hotel-info">
+                                                <div class="hotel-icon">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M3 21H21V9L12 2L3 9V21Z" fill="currentColor"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="hotel-details">
+                                                    <h5 class="hotel-name">{{ h[1] }}</h5>
+                                                    <p class="hotel-meta">
+                                                        <span class="hotel-location">
+                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9S10.62 6.5 12 6.5S14.5 7.62 14.5 9S13.38 11.5 12 11.5Z" fill="currentColor"/>
+                                                            </svg>
+                                                            {{ h[3] }}
+                                                        </span>
+                                                        <span class="hotel-rooms">{{ h[2] }} rooms</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="hotel-id">ID: {{ h[0] }}</div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Customer Feedback -->
+                <div class="col-lg-4">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Recent Feedback
+                            </h3>
+                            <span class="item-count">{{ feedbacks[:5]|length }} Latest</span>
+                        </div>
+                        <div class="card-content">
+                            {% if feedbacks|length == 0 %}
+                                <div class="empty-state">
+                                    <div class="empty-icon">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </div>
+                                    <p>No feedback received yet</p>
+                                </div>
+                            {% else %}
+                                <div class="feedback-list">
+                                    {% for f in feedbacks[:5]|reverse %}
+                                        <div class="feedback-item">
+                                            <div class="feedback-header">
+                                                <div class="customer-avatar">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="currentColor"/>
+                                                        <path d="M12 14C7.58172 14 4 17.5817 4 22H20C20 17.5817 16.4183 14 12 14Z" fill="currentColor"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="customer-info">
+                                                    <h6 class="customer-name">{{ f[1] }}</h6>
+                                                    <p class="customer-email">{{ f[2] }}</p>
+                                                </div>
+                                            </div>
+                                            <p class="feedback-message">{{ f[3][:80] }}{% if f[3]|length > 80 %}...{% endif %}</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hotels Section -->
+        <section id="hotels-section" class="admin-section">
+            <div class="section-header">
+                <div class="header-content">
+                    <h1 class="section-title">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 21H21V9L12 2L3 9V21Z" fill="currentColor"/>
+                            <path d="M9 12H15V16H9V12Z" fill="white"/>
+                        </svg>
+                        All Registered Hotels
+                    </h1>
+                    <p class="section-subtitle">Manage all hotel properties in the system</p>
+                </div>
+                <form method="GET" action="/admin/dashboard" class="refresh-form">
+                    <button type="submit" class="btn btn-outline-primary refresh-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M20.49 9C19.9828 7.56678 19.1209 6.28392 17.9845 5.27304C16.8482 4.26216 15.4745 3.55682 13.9917 3.21834C12.5089 2.87986 10.9652 2.91902 9.50481 3.33329C8.04437 3.74757 6.71475 4.52152 5.64 5.58L1 10M23 14L18.36 18.42C17.2853 19.4785 15.9556 20.2524 14.4952 20.6667C13.0348 21.081 11.4911 21.1201 10.0083 20.7817C8.52547 20.4432 7.1518 19.7378 6.01547 18.727C4.87913 17.7161 4.01717 16.4332 3.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Refresh
+                    </button>
+                </form>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <h3 class="card-title">Hotel Management</h3>
+                    <span class="item-count">{{ hotels|length }} Total Hotels</span>
+                </div>
+                <div class="card-content">
+                    {% if hotels|length == 0 %}
+                        <div class="empty-state large">
+                            <div class="empty-icon">
+                                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 21H21V9L12 2L3 9V21Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <path d="M9 12H15V16H9V12Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                </svg>
+                            </div>
+                            <h4>No Hotels Registered</h4>
+                            <p>Hotels will appear here once property owners start registering their properties.</p>
+                        </div>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Hotel Name</th>
+                                        <th>Rooms</th>
+                                        <th>Location</th>
+                                        <th>Address</th>
+                                        <th>Amenities</th>
+                                        <th>Owner Email</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for h in hotels %}
+                                        <tr>
+                                            <td><span class="id-badge">{{ h[0] }}</span></td>
+                                            <td>
+                                                <div class="hotel-cell">
+                                                    <div class="hotel-icon-small">
+                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M3 21H21V9L12 2L3 9V21Z" fill="currentColor"/>
+                                                        </svg>
+                                                    </div>
+                                                    <span class="hotel-name-cell">{{ h[1] }}</span>
+                                                </div>
+                                            </td>
+                                            <td><span class="rooms-badge">{{ h[2] }}</span></td>
+                                            <td>
+                                                <div class="location-cell">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9S10.62 6.5 12 6.5S14.5 7.62 14.5 9S13.38 11.5 12 11.5Z" fill="currentColor"/>
+                                                    </svg>
+                                                    {{ h[3] }}
+                                                </div>
+                                            </td>
+                                            <td><span class="address-cell">{{ h[4][:30] }}{% if h[4]|length > 30 %}...{% endif %}</span></td>
+                                            <td>
+                                                <div class="amenities-cell">
+                                                    {% if h[5] %}
+                                                        <span class="amenity-tag">
+                                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M1 9L5 13L9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                <path d="M20 3H4C2.9 3 2 3.9 2 5V19C2 20.1 2.9 21 4 21H20C21.1 21 22 20.1 22 19V5C22 3.9 21.1 3 20 3Z" stroke="currentColor" stroke-width="2"/>
+                                                            </svg>
+                                                            WiFi
+                                                        </span>
+                                                    {% endif %}
+                                                    {% if h[6] %}
+                                                        <span class="amenity-tag">
+                                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M19 7H5C3.9 7 3 7.9 3 9V15C3 16.1 3.9 17 5 17H19C20.1 17 21 16.1 21 15V9C21 7.9 20.1 7 19 7Z" stroke="currentColor" stroke-width="2"/>
+                                                            </svg>
+                                                            Parking
+                                                        </span>
+                                                    {% endif %}
+                                                    {% if not h[5] and not h[6] %}
+                                                        <span class="no-amenities">None</span>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                            <td><span class="email-cell">{{ h[7] }}</span></td>
+                                            <td>
+                                                <button class="btn btn-danger btn-sm delete-btn" onclick="confirmHotelDelete('{{ h[0] }}', '{{ h[1] }}')">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                    Delete
+                                                </button>
+                                                <!-- Hidden Delete Form -->
+                                                <form id="delete-hotel-form-{{ h[0] }}" method="POST" action="/admin/delete_hotel" style="display: none;">
+                                                    <input type="hidden" name="hotel_id" value="{{ h[0] }}">
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Customer Feedback Section -->
+        <section id="feedback-section" class="admin-section">
+            <div class="section-header">
+                <div class="header-content">
+                    <h1 class="section-title">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Customer Feedback
+                    </h1>
+                    <p class="section-subtitle">Monitor customer feedback and reviews</p>
+                </div>
+                <form method="GET" action="/admin/dashboard" class="refresh-form">
+                    <button type="submit" class="btn btn-outline-primary refresh-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M20.49 9C19.9828 7.56678 19.1209 6.28392 17.9845 5.27304C16.8482 4.26216 15.4745 3.55682 13.9917 3.21834C12.5089 2.87986 10.9652 2.91902 9.50481 3.33329C8.04437 3.74757 6.71475 4.52152 5.64 5.58L1 10M23 14L18.36 18.42C17.2853 19.4785 15.9556 20.2524 14.4952 20.6667C13.0348 21.081 11.4911 21.1201 10.0083 20.7817C8.52547 20.4432 7.1518 19.7378 6.01547 18.727C4.87913 17.7161 4.01717 16.4332 3.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Refresh
+                    </button>
+                </form>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <h3 class="card-title">All Customer Feedback</h3>
+                    <span class="item-count">{{ feedbacks|length }} Total Feedback</span>
+                </div>
+                <div class="card-content">
+                    {% if feedbacks|length == 0 %}
+                        <div class="empty-state large">
+                            <div class="empty-icon">
+                                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                </svg>
+                            </div>
+                            <h4>No Customer Feedback</h4>
+                            <p>Customer feedback and reviews will appear here once customers start sharing their experiences.</p>
+                        </div>
+                    {% else %}
+                        <div class="feedback-grid">
+                            {% for f in feedbacks %}
+                                <div class="feedback-card">
+                                    <div class="feedback-card-header">
+                                        <div class="customer-info-detailed">
+                                            <div class="customer-avatar-large">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="currentColor"/>
+                                                    <path d="M12 14C7.58172 14 4 17.5817 4 22H20C20 17.5817 16.4183 14 12 14Z" fill="currentColor"/>
+                                                </svg>
+                                            </div>
+                                            <div class="customer-details">
+                                                <h5 class="customer-name-large">{{ f[1] }}</h5>
+                                                <p class="customer-email-large">{{ f[2] }}</p>
+                                            </div>
+                                        </div>
+                                        <span class="feedback-id">ID: {{ f[0] }}</span>
+                                    </div>
+                                    <div class="feedback-content">
+                                        <p class="feedback-message-full">{{ f[3] }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteHotelModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Hotel Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <div class="delete-icon">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h4>Delete Hotel?</h4>
+                        <p>Are you sure you want to permanently delete <strong id="deleteHotelName"></strong>? This action cannot be undone and will remove all associated data.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmHotelDeleteBtn">Delete Hotel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDeleteHotelId = null;
+
+        // Navigation functionality
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.admin-nav .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').classList.add('active');
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+        }
+
+        // Hotel deletion functionality
+        function confirmHotelDelete(hotelId, hotelName) {
+            currentDeleteHotelId = hotelId;
+            document.getElementById('deleteHotelName').textContent = hotelName;
+            const modal = new bootstrap.Modal(document.getElementById('deleteHotelModal'));
+            modal.show();
+        }
+
+        // Handle delete confirmation
+        document.getElementById('confirmHotelDeleteBtn').addEventListener('click', function() {
+            if (currentDeleteHotelId) {
+                document.getElementById('delete-hotel-form-' + currentDeleteHotelId).submit();
+            }
+        });
+
+        // Refresh data functionality
+        function refreshData() {
+            window.location.reload();
+        }
+
+        // Initialize floating animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach((shape, index) => {
+                shape.style.animationDelay = `${index * 2}s`;
+            });
+        });
+
+        // Add click handlers for navigation
+        document.querySelectorAll('.admin-nav .nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionName = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+                showSection(sectionName);
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
