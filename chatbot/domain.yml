@@ -1,0 +1,113 @@
+version: "3.1"
+
+intents:
+  - greet
+  - booking
+  - cancellation
+  - flight_booking
+  - contact_us
+  - hotel_search
+  - search_by_name
+  - search_by_location
+  - inform_hotel_name
+  - inform_location
+  - out_of_scope
+  - acknowledge
+
+entities:
+  - hotel_name
+  - location
+
+slots:
+  hotel_name:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: hotel_name
+
+  location:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: location
+        
+
+responses:
+  utter_greet:
+    - text: "Welcome to Trippy chatbot Assistant, please click on one of three buttons or type your query."
+      buttons:
+        - title: "Booking"
+          payload: "/booking"
+        - title: "Cancellation"
+          payload: "/cancellation"
+        - title: "Contact Us"
+          payload: "/contact_us"
+
+  utter_booking_options:
+    - text: "Please choose what you'd like to book."
+      buttons:
+        - title: "Hotels"
+          payload: "/hotel_search"
+        - title: "Flights"
+          payload: "/flight_booking"
+
+  utter_flight_booking:
+    - text: "We have so many partnership flights for your wellness. Please visit the 'Airlines' section on our website."
+
+  utter_cancellation:
+    - text: "Please contact the owner of the hotel you booked. Take credentials from our website."
+
+  utter_contact_us:
+    - text: |
+        You can contact us via:
+        Email: support@trippybooking.com
+        Phone: +91-9999999999
+        Address: 101, Trippy Street, Delhi
+
+  utter_hotel_search_options:
+    - text: "Would you like to search hotel by name or location?"
+      buttons:
+        - title: "Name"
+          payload: "/search_by_name"
+        - title: "Location"
+          payload: "/search_by_location"
+
+  utter_ask_hotel_name:
+    - text: "Please enter the name of the hotel you're looking for."
+
+  utter_ask_location:
+    - text: "Please enter the location you'd like to search hotels in."
+
+  utter_no_hotel_found:
+    - text: "There is no hotel registered with that name!"
+
+  utter_no_location_found:
+    - text: "There is no hotel registered in that location!"
+
+  utter_out_of_scope:
+    - text: "Sorry, I didn’t understand that. Please choose one of the following:"
+      buttons:
+        - title: "Booking"
+          payload: "/booking"
+        - title: "Cancellation"
+          payload: "/cancellation"
+        - title: "Contact Us"
+          payload: "/contact_us"
+
+  utter_acknowledge:
+    - text: "You're welcome! 😊"
+    - text: "Glad I could help!"
+    - text: "Take care!"
+    - text: "Bye! Have a great day!"
+    - text: "Okay!"
+    - text: "Thanks for chatting with me!"
+
+actions:
+  - action_search_hotel_by_name
+  - action_search_hotel_by_location
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
