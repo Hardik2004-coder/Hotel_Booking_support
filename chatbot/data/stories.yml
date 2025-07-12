@@ -1,0 +1,53 @@
+version: "3.1"
+
+stories:
+- story: Greet and show main options
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- story: Booking flow
+  steps:
+  - intent: booking
+  - action: utter_booking_options
+
+- story: Hotel search by name
+  steps:
+  - intent: hotel_search
+  - action: utter_hotel_search_options
+  - intent: search_by_name
+  - action: utter_ask_hotel_name
+  - intent: inform_hotel_name
+  - action: action_search_hotel_by_name
+
+- story: Hotel search by location
+  steps:
+  - intent: hotel_search
+  - action: utter_hotel_search_options
+  - intent: search_by_location
+  - action: utter_ask_location
+  - intent: inform_location
+  - action: action_search_hotel_by_location
+
+- story: booking flight
+  steps:
+  - intent: booking
+  - action: utter_booking_options
+  - intent: flight_booking
+  - action: utter_flight_booking
+
+- story: cancellation flow
+  steps:
+  - intent: cancellation
+  - action: utter_cancellation
+
+- story: contact us flow
+  steps:
+  - intent: contact_us
+  - action: utter_contact_us
+
+- story: handle out of scope
+  steps:
+  - intent: out_of_scope
+  - action: utter_out_of_scope
+

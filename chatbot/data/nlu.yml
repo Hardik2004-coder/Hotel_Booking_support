@@ -1,0 +1,122 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hello
+    - hi
+    - hey
+    - Namaste
+    - Bonjour
+    - good morning
+    - good afternoon
+    - good evening
+    - I need help
+    - I want to talk
+    - anyone here?
+    - hey there
+    - howdy
+
+- intent: booking
+  examples: |
+    - I want to book something
+    - Book
+    - Booking
+
+- intent: cancellation
+  examples: |
+    - Cancel my booking
+    - Cancellation
+    - I want to cancel
+
+- intent: contact_us
+  examples: |
+    - I want to contact support
+    - Contact us
+    - Help me contact you
+
+- intent: hotel_search
+  examples: |
+    - I want to book a hotel
+    - Hotel booking
+    - Show me hotels
+
+- intent: flight_booking
+  examples: |
+    - I want to book a flight
+    - book a flight
+    - flight booking
+    - reserve airline tickets
+
+- intent: search_by_name
+  examples: |
+    - By name
+    - Search using hotel name
+    - Name
+
+- intent: search_by_location
+  examples: |
+    - By location
+    - Search hotels in a location
+    - Location
+
+- intent: acknowledge
+  examples: |
+    - okay
+    - thanks
+    - thank you
+    - bye
+    - goodbye
+    - see you
+    - alright
+    - cool
+    - fine
+    - got it
+    - understood
+    - ok
+    - k
+    - cya
+
+- intent: inform_hotel_name
+  examples: |
+    - [Trippy Inn](hotel_name)
+    - [Taj Palace](hotel_name)
+    - [Hotel Royal](hotel_name)
+    - [The Grand](hotel_name)
+    - I want to book [Trippy Inn](hotel_name)
+    - Can you check availability at [The Grand](hotel_name)?
+    - Please search for [Hotel Royal](hotel_name)
+    - Do you have [Taj Palace](hotel_name)?
+
+- intent: inform_location
+  examples: |
+    - [Delhi](location)
+    - [Mumbai](location)
+    - [Bangalore](location)
+    - [London](location)
+    - I want to book in [Bangalore](location)
+    - What about [Delhi](location)?
+    - Show me hotels in [Mumbai](location)
+    - Find something in [London](location)
+
+- intent: out_of_scope
+  examples: |
+    - What is the meaning of life?
+    - Tell me a joke
+    - How is the weather?
+    - I want to play a game
+    - Can you help me with cooking?
+
+- lookup: hotel_name
+  examples: |
+    - Trippy Inn
+    - Taj Palace
+    - Hotel Royal
+    - The Grand
+
+- lookup: location
+  examples: |
+    - Delhi
+    - Mumbai
+    - Bangalore
+    - London
